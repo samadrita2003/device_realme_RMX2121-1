@@ -100,6 +100,12 @@ PRODUCT_COPY_FILES += \
 PRODUCT_AAPT_CONFIG := xxxhdpi
 PRODUCT_AAPT_PREF_CONFIG := xxxhdpi
 
+# KPOC
+PRODUCT_PACKAGES += \
+    android.hardware.health@2.0 \
+    libshim_showlogo \
+    libsuspend
+
 # Lights
 PRODUCT_PACKAGES += \
     android.hardware.light@2.0-service.RMX3031

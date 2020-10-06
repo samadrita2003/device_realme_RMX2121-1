@@ -34,6 +34,32 @@ if [ ! -f "${HELPER}" ]; then
 fi
 source "${HELPER}"
 
+function blob_fixup {
+    case "$1" in
+        lib/libsink.so)
+            "$PATCHELF" --add-needed "libshim_vtservice.so" "$2"
+            ;;
+        lib/libshowlogo.so)
+            "$PATCHELF" --add-needed "libshim_showlogo.so" "$2"
+            ;;
+        system_ext/etc/permissions/com.android.hotwordenrollment.common.util.xml)
+            sed -i 's/my_product/system_ext/' "$2"
+            ;;
+        vendor/etc/init/hw/*.rc)
+            sed -i 's ${ro.vendor.rc} /vendor/etc/init/hw/ g' "$2"
+            ;;
+        vendor/lib*/libudf.so)
+            "$PATCHELF" --replace-needed "libunwindstack.so" "libunwindstack-v30.so" "$2"
+            ;;
+        vendor/lib*/libmtkcam_stdutils.so)
+            "$PATCHELF" --replace-needed "libutils.so" "libutils-v30.so" "$2"
+            ;;
+        vendor/lib*/hw/audio.primary.mt6785.so)
+            "$PATCHELF" --replace-needed "libmedia_helper.so" "libmedia_helper-v30.so" "$2"
+            ;;
+    esac
+}
+
 # Default to sanitizing the vendor folder before extraction
 CLEAN_VENDOR=true
 
