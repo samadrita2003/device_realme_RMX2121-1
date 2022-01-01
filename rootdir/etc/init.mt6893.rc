@@ -40,3 +40,12 @@ service aee_aedv /system/bin/true
 service aee_aedv64 /system/bin/true
     oneshot
     disabled
+
+service vendor.media.omx /vendor/bin/hw/android.hardware.media.omx@1.0-service
+    override
+    class main
+    user mediacodec
+    group camera drmrpc mediadrm
+    ioprio rt 4
+    writepid /dev/cpuset/foreground/tasks
+	
