@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-DEVICE_PATH := device/realme/RMX3031
+DEVICE_PATH := device/realme/RMX2121
 
 # Installs gsi keys into ramdisk, to boot a GSI with verified boot.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
@@ -28,8 +28,8 @@ PRODUCT_EXTRA_VNDK_VERSIONS := 30
 PRODUCT_SHIPPING_API_LEVEL := 30
 
 # Call proprietary blob setup
-$(call inherit-product, vendor/realme/RMX3031/RMX3031-vendor.mk)
-$(call inherit-product, vendor/realme/IMS-RMX3031/mtk-ims.mk)
+$(call inherit-product, vendor/realme/RMX2121/RMX2121-vendor.mk)
+$(call inherit-product, vendor/realme/IMS-RMX2121/mtk-ims.mk)
 
 # Dynamic Partition
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
@@ -64,11 +64,11 @@ PRODUCT_PACKAGES += \
     fastbootd
 
 PRODUCT_COPY_FILES += \
-    $(DEVICE_PATH)/vendor_overlay/etc/fstab.mt6893:$(TARGET_COPY_OUT_RAMDISK)/fstab.mt6893
+    $(DEVICE_PATH)/vendor_overlay/etc/fstab.mt6889:$(TARGET_COPY_OUT_RAMDISK)/fstab.mt6889
 
 # Fingerprint
 PRODUCT_PACKAGES += \
-    android.hardware.biometrics.fingerprint@2.3-service.RMX3031 \
+    android.hardware.biometrics.fingerprint@2.3-service.RMX2121 \
 	vendor.oplus.hardware.biometrics.fingerprint@2.1
 
 PRODUCT_COPY_FILES += \
@@ -86,7 +86,7 @@ PRODUCT_PACKAGES += \
 
 # Init
 PRODUCT_PACKAGES += \
-    init.mt6893.rc
+    init.mt6889.rc
 
 # Copy the kernel from the prebuilts directory.
 PRODUCT_COPY_FILES += \
@@ -108,7 +108,7 @@ PRODUCT_PACKAGES += \
 
 # Lights
 PRODUCT_PACKAGES += \
-    android.hardware.light@2.0-service.RMX3031
+    android.hardware.light@2.0-service.RMX2121
 
 # NFC
 #PRODUCT_SOONG_NAMESPACES += \

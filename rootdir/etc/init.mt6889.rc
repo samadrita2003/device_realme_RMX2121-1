@@ -1,0 +1,66 @@
+on init
+    setprop sys.usb.ffs.aio_compat 1
+    setprop persist.vendor.vilte_support 0
+    mount none /vendor/lost+found /vendor/overlay bind
+
+    # Disable edge limit control interface
+    write /proc/touchpanel/oplus_tp_limit_enable 0
+    write /proc/touchpanel/oplus_tp_direction 1
+	
+	# Disable vendor overlay
+    mount none /vendor/lost+found /vendor/overlay bind
+
+on post-fs-data
+    # Services
+    stop console
+
+on post-fs
+
+on property:init.svc.face_hal=restarting
+    stop face_hal
+
+on boot
+    chown system system /proc/fastchg_fw_update
+    write /proc/fastchg_fw_update 1
+
+    chown system system /sys/class/power_supply/battery/mmi_charging_enable
+    chmod 0666 /sys/class/power_supply/battery/mmi_charging_enable
+ 
+on property:sys.boot_completed=1
+    # Toggle airplane mode on and off on boot to enable volte.
+    # This hack needs ImsInit commit to request ims on boot to work properly
+
+    exec - root -- /system/bin/sh -c "sleep 3"
+    exec - root -- /system/bin/sh -c "settings put global airplane_mode_on 1"
+    exec - root -- /system/bin/sh -c "am broadcast -a android.intent.action.AIRPLANE_MODE --ez state true"
+
+    exec - root -- /system/bin/sh -c "settings put global airplane_mode_on 0"
+    exec - root -- /system/bin/sh -c "am broadcast -a android.intent.action.AIRPLANE_MODE --ez state false"
+    
+# Disable AOSP RIL if MTK RIL is up
+on property:vendor.ril.mtk=1
+    stop vendor.ril-daemon
+
+service prop-adap-core-gsi /odm/bin/self-init gsicore
+    class core
+    user root
+    group root system radio
+    oneshot
+    override
+    disabled
+
+service prop-adap-main-gsi /odm/bin/self-init gsimain
+    class main
+    user root
+    group root system radio
+    oneshot
+    override
+    disabled
+
+service aee_aedv /system/bin/true
+    oneshot
+    disabled
+
+service aee_aedv64 /system/bin/true
+    oneshot
+    disabled

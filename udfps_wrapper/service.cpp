@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "android.hardware.biometeics.fingerprint@2.3-service.RMX3031"
+#define LOG_TAG "android.hardware.biometeics.fingerprint@2.3-service.RMX2121"
 
 #include <android-base/logging.h>
 #include <hidl/HidlTransportSupport.h>

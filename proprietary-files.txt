@@ -1,5 +1,3 @@
-# All unpinned blobs are from RMX3031_11_A.20
-
 # APNs
 etc/apns-conf.xml:product/etc/apns-conf.xml
 
