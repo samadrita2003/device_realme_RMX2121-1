@@ -30,4 +30,7 @@ allow init sysfs:file { setattr  write };
 allow init system_file:file { execute_no_trans };
 
 # FOD
-allow init sysfs_fod:file { rw_file_perms setattr };
+allow init sysfs_fod:file { rw_file_perms setattr getattr };
+allow init sysfs_fingerprint_notify:file { rw_file_perms setattr getattr };
+allow init proc_tp:file { open read write setattr getattr };
+allow init servicemanager:binder { call };
